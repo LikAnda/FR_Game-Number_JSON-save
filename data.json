@@ -1,0 +1,14 @@
+{
+    "users": {
+    },
+    "dif complete": {
+        "easy": false,
+        "medium": false,
+        "hard": false,
+        "extrem": false
+    },
+    "success": {
+        "firstTry": false,
+        "allDiffcultyWin": false
+    }
+}
