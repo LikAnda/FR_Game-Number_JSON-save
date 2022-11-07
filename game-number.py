@@ -1,4 +1,3 @@
-from operator import iconcat
 import os
 import json
 import random
