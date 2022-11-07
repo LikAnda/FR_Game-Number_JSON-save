@@ -1,3 +1,4 @@
+from operator import iconcat
 import os
 import json
 import random
@@ -301,13 +302,13 @@ def verifyRegister():
         registerWindow.destroy()
         login()
 
-    elif newPassword != newPasswordCheckEntry:
+    elif newPassword != newPasswordCheck:
         print("newPassword != newPasswordCheckEntry")
-        registerInfoLabel.config(text="THE PASSWORDS ARE NOT THE SAME")
+        messagebox.showerror(title="Erreur", message=f"Les deux mots de passe sont différents!\nPremier mot de passe: {newPassword}\nSecond mot de passe {newPasswordCheck}", icon="error")
     
     elif newUsername == newPassword:
         print("newUsername == newPassword")
-        registerInfoLabel.config(text="THE USERNAME AND PASSWORD ARE THE SAME")
+        messagebox.showerror(title="Erreur", message=f"Le nom d'utilisateur et le mot de passe sont les mêmes!\nNom d'utilisateur: {newUsername}\nMot de passe: {newPassword}", icon="error")
 
 def register():
     global registerWindow
@@ -362,11 +363,11 @@ def verifyLogin():
             main()
         elif password != loginDataJson["users"][user]["password"]:
             print(f"WRONG PASSWORD ({password})")
-            loginInfoLabel.config(text="WRONG PASSWORD", fg="red")
+            messagebox.showerror(title="Erreur", message=f"Le mot de passe ne correspond pas avec l'utilisateur\nNom d'utilisateur: {user}\nMot de passe: {password}", icon="error")
 
     elif userExist <= 0:
         print(f"WRONG USER ({user})")
-        loginInfoLabel.config(text="USER NO EXIST", fg="red")
+        messagebox.showerror(title="Erreur", message=f"L'utilisateur n'existe pas\nNom d'utilisateur entré: {user}", icon="error")
 
 def login():
 
