@@ -62,7 +62,6 @@ def difficulty():
     hard = reloadData("dif complete", "hard")
     extrem = reloadData("dif complete", "extrem")
 
-    # Widgets
     difficultyLabel = Label(difWindow, text="Difficulté:", font=mainFont)
     easyButton = Button(difWindow, text=f"Facile {difficultyCheck(easy)}", fg="green", font=mainFont, command=lambda: [difficultyChoice(1), difWindow.destroy(), gameNumber()])
     casualButton = Button(difWindow, text=f"Moyen {difficultyCheck(medium)}", fg="orange", font=mainFont, command=lambda: [difficultyChoice(2), difWindow.destroy(), gameNumber()])
@@ -171,7 +170,6 @@ def gameNumber():
     game.geometry("400x225")
     game.title(f"{difWording} / Jeux - Projet Octobre 2022 - NSI")
 
-    #Widgets
     label1 = Label(game, text=f"Le nombre à trouver est entre 0 et {difNumber}:", font=mainFont)
     tryLabel = Label(game, text="Entrer un nombre:", font=mainFont)
     global tryEntry, tryButton, hintLabel
@@ -259,8 +257,6 @@ def main():
     main.geometry("400x225")
     main.title("Menu Principal - Projet Octobre 2022 - NSI")
 
-
-    # Widgets
     titleLabel = Label(main, text="Number Games", font=("Orbitron", 20)) 
     playButton = Button(main, text="PLAY", command=lambda: [main.destroy(), difficulty()], font=("Orbitron", 25), fg="red")
     resetButton = Button(main, text="Réinitialiser Progression", font=("Orbitron", 8), fg="purple", command=resetProgression)
@@ -268,7 +264,6 @@ def main():
     successButton = Button(main, text=f"🏆 - succès {getSucessNumber()}/2", command=lambda: successMenu(), font=mainFont, fg="#A09918")
     leaveButton = Button(main, text="Quitter", font=mainFont, fg="#A90F0F", command=exit)
 
-    # Dsiplay Widgets
     titleLabel.pack(pady=5)
     playButton.pack(pady=10)
     resetButton.pack()
@@ -288,9 +283,25 @@ def verifyRegister():
     newPasswordCheck = str(newPasswordCheckEntry.get())
     print(f"New Username: {newUsername}\nNew Password: {newPassword}")
 
-    if newPassword == newPasswordCheck and newUsername != newPassword:
-        print("newPassword == newPasswordCheck")
-        
+    if len(newUsername) - newUsername.count(" ") == 0 or len(newPassword) - newPassword.count(" ") == 0:
+        print("len(newUsername) == 0 or len(newPassword) == 0")
+        if len(newUsername) - newUsername.count(" ") == 0:
+            print("len(newUsername) == 0")
+            noEntryWording = "nom d'utilisateur"
+        elif len(newPassword) - newPassword.count(" ") == 0:
+            print("len(newPassword) == 0")
+            noEntryWording = "mot de passe"
+        messagebox.showerror(title="Erreur", message=f"Veuillez entrer un {noEntryWording}")
+
+    elif newUsername == newPassword:
+        print("newUsername == newPassword")
+        messagebox.showerror(title="Erreur", message=f"Le nom d'utilisateur et le mot de passe sont les mêmes!\nNom d'utilisateur: {newUsername}\nMot de passe: {newPassword}", icon="error")
+
+    elif newPassword != newPasswordCheck:
+        print("newPassword != newPasswordCheckEntry")
+        messagebox.showerror(title="Erreur", message=f"Les deux mots de passe sont différents!\nPremier mot de passe: {newPassword}\nSecond mot de passe {newPasswordCheck}", icon="error")
+
+    else:        
         print(registerDataJson["users"])
         registerDataJson["users"].update({newUsername: {"username": newUsername,"password": newPassword}}) # update: dictionnary / append: list (4 heures pour comprendre...)
 
@@ -300,14 +311,6 @@ def verifyRegister():
         messagebox.showinfo(title="Utilisateur Crée", message=f"Le nouvel utilisateur à bien été crée sous le nom de:\n«{newUsername}»")
         registerWindow.destroy()
         login()
-
-    elif newPassword != newPasswordCheck:
-        print("newPassword != newPasswordCheckEntry")
-        messagebox.showerror(title="Erreur", message=f"Les deux mots de passe sont différents!\nPremier mot de passe: {newPassword}\nSecond mot de passe {newPasswordCheck}", icon="error")
-    
-    elif newUsername == newPassword:
-        print("newUsername == newPassword")
-        messagebox.showerror(title="Erreur", message=f"Le nom d'utilisateur et le mot de passe sont les mêmes!\nNom d'utilisateur: {newUsername}\nMot de passe: {newPassword}", icon="error")
 
 def register():
     global registerWindow
@@ -337,7 +340,6 @@ def register():
 
     registerWindow.resizable(False, False)
     registerWindow.mainloop()
-
 
 def verifyLogin():
 
